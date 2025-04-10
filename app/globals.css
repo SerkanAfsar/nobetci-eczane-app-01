@@ -3,13 +3,23 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #c00;
+  --secondary: #3d3e3e;
+  --headerTopHeight: 80px;
+  --headerBottomHeight: 70px;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-poppins: var(--font-poppins);
+  --headerTopHeight: var(--headerTopHeight);
+  --headerBottomHeight: var(--headerBottomHeight);
+  --heroSectionHeight: calc(var(--headerTopHeight) + var(--headerBottomHeight));
 }
 
 @media (prefers-color-scheme: dark) {
@@ -20,7 +30,25 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply m-0 min-h-screen p-0;
+}
+@utility container {
+  padding-inline: 2rem;
+
+  @variant md {
+    padding-inline: 4rem;
+  }
+  @variant lg {
+    padding-inline: 6rem;
+  }
+  @variant xl {
+    padding-inline: 8rem;
+  }
+}
+@utility flexCenter {
+  @apply flex items-center justify-center;
+}
+@layer components {
+  .infoItem {
+  }
 }
