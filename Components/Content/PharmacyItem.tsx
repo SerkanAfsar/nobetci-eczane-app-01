@@ -23,6 +23,7 @@ export default function PharmacyItem({ pharmacy }: { pharmacy: PharmacyType }) {
           </span>
           <b>{pharmacy.ilceAdi}</b>
           <a
+            title={`${pharmacy.eczaneAdi} Telefon Numarası`}
             href={`tel:${pharmacy.telefon.replace("(", "").replace(")", "").replace(" ", "").trim()}`}
             className="mt-auto"
           >
