@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
 import { Analytics } from "@vercel/analytics/react";
+import NextTopLoader from "nextjs-toploader";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -30,6 +31,12 @@ export default function RootLayout({
         <main className="block w-full flex-auto">{children}</main>
         <Footer />
         <Analytics />
+        <NextTopLoader
+          color="#cc0000"
+          height={4}
+          showSpinner={true}
+          zIndex={1600}
+        />
       </body>
     </html>
   );

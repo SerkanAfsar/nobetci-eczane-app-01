@@ -13,7 +13,6 @@ export const metadata: Metadata = {
       url: "https://www.nobetcieczanelistesi.org/nobetci-eczaneler",
     },
   ],
-  themeColor: "#fff",
 
   openGraph: {
     title: "Türkiye İl İlçe Nöbetçi Eczane Listesi",

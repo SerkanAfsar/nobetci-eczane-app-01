@@ -15,7 +15,6 @@ export const metadata: Metadata = {
       url: "https://www.nobetcieczanelistesi.org",
     },
   ],
-  themeColor: "#fff",
 
   openGraph: {
     title: "Türkiye İl İlçe Nöbetçi Eczane Listesi",
