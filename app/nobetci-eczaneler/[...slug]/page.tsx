@@ -1,3 +1,4 @@
+import CustomSeoTags from "@/Components/Common/CustomSeoTags";
 import PharmacyItem from "@/Components/Content/PharmacyItem";
 import { GetCityListService, GetCityPharmacies } from "@/Services";
 import { CityType, PharmacyType } from "@/Types";
@@ -7,8 +8,44 @@ import {
   getDistrictList,
   slugUrl,
 } from "@/utils";
+import { Metadata } from "next";
 
 import { notFound } from "next/navigation";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const result = await FindCityWithPharmacies(slug[0]);
+
+  let districtName: string | undefined = "";
+  if (slug.length == 2) {
+    const districtList = getDistrictList(result!.pharmacies);
+    districtName = findDistrictName(districtList, slug[1]);
+  }
+
+  const value = districtName
+    ? `${result?.city.ilAdi} ${districtName} Nöbetçi Eczaneleri`
+    : `${result?.city.ilAdi} Nöbetçi Eczaneleri`;
+
+  let url = `https://www.nobetcieczanelistesi.org/${result?.city.seoUrl}`;
+
+  if (districtName) {
+    url += "/" + slugUrl(districtName);
+  }
+
+  return {
+    title: value,
+    description: `${value} | ${value} Adres ve Telefon Numaraları`,
+    openGraph: {
+      title: value,
+      description: `${value} | ${value} Adres ve Telefon Numaraları`,
+      url,
+    },
+  };
+}
 
 export default async function Page({
   params,
@@ -37,6 +74,7 @@ export default async function Page({
 
   return (
     <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      <CustomSeoTags cityName={result.city.ilAdi} districtName={districtName} />
       {pharmacyData.map((item, key) => (
         <PharmacyItem pharmacy={item} key={key} />
       ))}

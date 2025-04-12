@@ -7,6 +7,7 @@ import { CityType } from "@/Types";
 import { useEffect, useRef, useState } from "react";
 import HeaderAside from "./HeaderAside";
 import menuIcon from "../../public/images/hamburger.png";
+import Link from "next/link";
 
 export default function HeaderTop({ cityList }: { cityList: CityType[] }) {
   const [isOpened, setIsOpened] = useState<boolean>(false);
@@ -36,7 +37,11 @@ export default function HeaderTop({ cityList }: { cityList: CityType[] }) {
       ref={headerTopSectionRef}
     >
       <div className="container mx-auto flex h-[calc(var(--headerTopHeight))] items-center justify-between">
-        <div className="inline-flex items-center justify-between gap-3">
+        <Link
+          href={"/"}
+          title="Nöbetçi Eczane Listesi"
+          className="inline-flex items-center justify-between gap-3"
+        >
           <CustomImage
             src={logo}
             width={50}
@@ -46,7 +51,7 @@ export default function HeaderTop({ cityList }: { cityList: CityType[] }) {
           <span className="font-bold uppercase md:text-2xl">
             Nöbetçi Eczaneler
           </span>
-        </div>
+        </Link>
         <div className="hidden items-center justify-center gap-3 text-sm xl:flex">
           {NavbarLinks.map((item, index) => (
             <HeaderTopLink title={item.title} url={item.link} key={index} />
