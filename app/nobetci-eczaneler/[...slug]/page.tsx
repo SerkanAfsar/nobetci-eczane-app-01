@@ -15,22 +15,32 @@ import { notFound } from "next/navigation";
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string[] }>;
 }): Promise<Metadata> {
   const { slug } = await params;
   const result = await FindCityWithPharmacies(slug[0]);
+  if (!result) {
+    return {
+      title: "Nöbetçi Eczane",
+      description: `Nöbetçi Eczane Adres ve Telefon Numaraları`,
+      openGraph: {
+        title: "Nöbetçi Eczane",
+        description: `Nöbetçi Eczane Adres ve Telefon Numaraları`,
+      },
+    };
+  }
 
   let districtName: string | undefined = "";
   if (slug.length == 2) {
-    const districtList = getDistrictList(result!.pharmacies);
+    const districtList = getDistrictList(result.pharmacies);
     districtName = findDistrictName(districtList, slug[1]);
   }
 
   const value = districtName
-    ? `${result?.city.ilAdi} ${districtName} Nöbetçi Eczaneleri`
-    : `${result?.city.ilAdi} Nöbetçi Eczaneleri`;
+    ? `${result.city.ilAdi} ${districtName} Nöbetçi Eczaneleri`
+    : `${result.city.ilAdi} Nöbetçi Eczaneleri`;
 
-  let url = `https://www.nobetcieczanelistesi.org/${result?.city.seoUrl}`;
+  let url = `https://www.nobetcieczanelistesi.org/${result.city.seoUrl}`;
 
   if (districtName) {
     url += "/" + slugUrl(districtName);
