@@ -57,7 +57,6 @@ export async function generateMetadata({
         url: "https://www.nobetcieczanelistesi.org",
       },
     ],
-    themeColor: "#fff",
 
     openGraph: {
       title: value,
