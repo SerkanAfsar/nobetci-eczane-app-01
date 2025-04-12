@@ -26,12 +26,12 @@ export default function CityListWithSearch({ cities }: { cities: CityType[] }) {
         <input
           type="text"
           placeholder="Aramak İstediğiniz İli Yazınız..."
-          className="border-primary mx-auto block w-[250px] rounded-md border-2 p-3 text-sm font-bold text-black outline-none placeholder:text-center placeholder:font-bold placeholder:text-black"
+          className="border-primary mx-auto block w-[250px] rounded-md border-2 bg-white p-3 text-sm font-bold text-black outline-none placeholder:text-center placeholder:font-bold placeholder:text-black"
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
       </div>
-      <div className="xl:grid-col-3 grid-col-12 container mt-6 grid gap-6 md:grid-cols-4">
+      <div className="grid-col-12 container mx-auto mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {cityList.length ? (
           cityList.map((item, index) => (
             <Link

@@ -1,6 +1,6 @@
 "use server";
 
-import { CityType, ResponseResult } from "@/Types";
+import { CityPharmacyType, CityType, ResponseResult } from "@/Types";
 
 export type BaseServiceType = {
   method: "GET" | "POST" | "PUT" | "DELETE";
@@ -33,6 +33,7 @@ export async function BaseService({
       isSuccess: false,
       statusCode: 400,
       errorList: [],
+      entity: null,
     };
     if (error instanceof Error) {
       result.errorList = [error.message];
@@ -50,4 +51,11 @@ export async function GetCityListService() {
     method: "GET",
     url: "Cities",
   })) as ResponseResult<CityType>;
+}
+
+export async function GetCityPharmacies({ id }: { id: number }) {
+  return (await BaseService({
+    method: "GET",
+    url: `Pharmacies/${id}`,
+  })) as ResponseResult<CityPharmacyType>;
 }

@@ -20,6 +20,28 @@
   --headerTopHeight: var(--headerTopHeight);
   --headerBottomHeight: var(--headerBottomHeight);
   --heroSectionHeight: calc(var(--headerTopHeight) + var(--headerBottomHeight));
+  --animate-asideMenu: asideMenu 0.4s ease-in-out;
+  --animate-animateMenu: asideMenu 0.4s ease-in-out;
+  @keyframes asideMenu {
+    0% {
+      margin-right: -100%;
+      opacity: 0;
+    }
+    100% {
+      margin-right: 0px;
+      opacity: 1;
+    }
+  }
+  @keyframes animateMenu {
+    0% {
+      margin-top: -100%;
+      opacity: 0;
+    }
+    100% {
+      margin-top: 0px;
+      opacity: 1;
+    }
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -39,7 +61,7 @@ body {
     padding-inline: 4rem;
   }
   @variant lg {
-    padding-inline: 6rem;
+    padding-inline: 2rem;
   }
   @variant xl {
     padding-inline: 8rem;
@@ -49,6 +71,7 @@ body {
   @apply flex items-center justify-center;
 }
 @layer components {
-  .infoItem {
+  .customTitle {
+    @apply relative mb-4 inline-block text-xl font-bold uppercase after:absolute after:-bottom-2 after:left-0 after:block after:h-1 after:w-2/4 after:rounded-md after:bg-white after:content-[''];
   }
 }

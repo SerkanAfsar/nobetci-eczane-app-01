@@ -2,6 +2,7 @@ import Link from "next/link";
 import home from "../../public/images/home.png";
 import pharmacy from "../../public/images/Pharmacy.png";
 import CustomImage from "../Common/CustomImage";
+import { NavbarLinks } from "@/utils";
 
 export default function HeaderBottom() {
   const itemList: { title: string; href: string; icon: any }[] = [
@@ -10,22 +11,14 @@ export default function HeaderBottom() {
       href: "/",
       icon: home,
     },
-    {
-      title: "İstanbul Nöbetçi Eczaneleri",
-      href: "/",
-      icon: pharmacy,
-    },
-    {
-      title: "Ankara Nöbetçi Eczaneleri",
-      href: "/",
-      icon: pharmacy,
-    },
-    {
-      title: "İzmir Nöbetçi Eczaneleri",
-      href: "/",
-      icon: pharmacy,
-    },
   ];
+  NavbarLinks.forEach((item) =>
+    itemList.push({
+      title: item.title,
+      href: item.link,
+      icon: pharmacy,
+    }),
+  );
   return (
     <section className="bg-secondary hidden h-[calc(var(--headerBottomHeight))] w-full text-sm text-white uppercase xl:block">
       <div className="container mx-auto flex items-center justify-between">

@@ -28,11 +28,11 @@ export default function InfoSection() {
   return (
     <section className="block w-full py-12">
       <div className="container mx-auto flex flex-col gap-12">
-        <h3 className="block w-full text-center text-3xl uppercase">
+        <h3 className="relative block w-full text-center text-3xl font-medium uppercase after:absolute after:-bottom-3 after:left-1/2 after:h-[3px] after:w-[100px] after:-translate-x-1/2 after:rounded-md after:bg-black after:content-['']">
           Türkiye Nöbetçi Eczane Listesi
         </h3>
 
-        <div className="flexCenter infoItem w-full flex-wrap items-start justify-center xl:flex-nowrap xl:justify-between">
+        <div className="flexCenter infoItem w-full flex-wrap items-start justify-between gap-6 xl:flex-nowrap xl:justify-between">
           {data.map((item, key) => (
             <InfoItem
               key={key}
@@ -48,7 +48,7 @@ export default function InfoSection() {
 
 function InfoItem({ description, title }: InfoItemType) {
   return (
-    <div className="flexCenter group my-4 w-full flex-col justify-start gap-6 md:w-auto xl:my-0 xl:flex-1/4">
+    <div className="flexCenter group my-4 w-full shrink-0 grow-0 flex-col justify-start gap-6 md:w-auto md:flex-1/3 xl:my-0 xl:flex-1/4">
       <div className="flexCenter bg-primary/10 relative size-28 shrink-0 grow-0 rounded-full">
         <CustomImage
           src={img}
