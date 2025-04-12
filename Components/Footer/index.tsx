@@ -17,7 +17,7 @@ export default function Footer() {
           <ul className="text-md flex w-full flex-wrap gap-3">
             <li>
               <Link
-                href={"/nobetci-eczaneler/istanbul"}
+                href={"/nobetci-eczaneler/istanbul-nobetci-eczaneleri"}
                 title="İstanbul Nöbetçi Eczaneleri"
               >
                 İstanbul Nöbetçi Eczaneleri
@@ -25,7 +25,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href={"/nobetci-eczaneler/ankara"}
+                href={"/nobetci-eczaneler/ankara-nobetci-eczaneleri"}
                 title="Ankara Nöbetçi Eczaneleri"
               >
                 Ankara Nöbetçi Eczaneleri
@@ -33,7 +33,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href={"/nobetci-eczaneler/izmir"}
+                href={"/nobetci-eczaneler/izmir-nobetci-eczaneleri"}
                 title="İzmir Nöbetçi Eczaneleri"
               >
                 İzmir Nöbetçi Eczaneleri
@@ -41,7 +41,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href={"/nobetci-eczaneler/bursa"}
+                href={"/nobetci-eczaneler/bursa-nobetci-eczaneleri"}
                 title="Bursa Nöbetçi Eczaneleri"
               >
                 Bursa Nöbetçi Eczaneleri
@@ -49,7 +49,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href={"/nobetci-eczaneler/eskisehir"}
+                href={"/nobetci-eczaneler/eskisehir-nobetci-eczaneleri"}
                 title="Eskişehir Nöbetçi Eczaneleri"
               >
                 Eskişehir Nöbetçi Eczaneleri
@@ -57,7 +57,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href={"/nobetci-eczaneler/adana"}
+                href={"/nobetci-eczaneler/adana-nobetci-eczaneleri"}
                 title="Adana Nöbetçi Eczaneleri"
               >
                 Adana Nöbetçi Eczaneleri
@@ -65,7 +65,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href={"/nobetci-eczaneler/konya"}
+                href={"/nobetci-eczaneler/konya-nobetci-eczaneleri"}
                 title="Konya Nöbetçi Eczaneleri"
               >
                 Konya Nöbetçi Eczaneleri
@@ -73,7 +73,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href={"/nobetci-eczaneler/kayseri"}
+                href={"/nobetci-eczaneler/kayseri-nobetci-eczaneleri"}
                 title="Kayseri Nöbetçi Eczaneleri"
               >
                 Kayseri Nöbetçi Eczaneleri
@@ -81,7 +81,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href={"/nobetci-eczaneler/kocaeli"}
+                href={"/nobetci-eczaneler/kocaeli-nobetci-eczaneleri"}
                 title="Bursa Nöbetçi Eczaneleri"
               >
                 Kocaeli Nöbetçi Eczaneleri
@@ -90,7 +90,7 @@ export default function Footer() {
 
             <li>
               <Link
-                href={"/nobetci-eczaneler/malatya"}
+                href={"/nobetci-eczaneler/malatya-nobetci-eczaneleri"}
                 title="Malatya Nöbetçi Eczaneleri"
               >
                 Malatya Nöbetçi Eczaneleri
@@ -98,7 +98,7 @@ export default function Footer() {
             </li>
             <li>
               <Link
-                href={"/nobetci-eczaneler/elazig"}
+                href={"/nobetci-eczaneler/elazig-nobetci-eczaneleri"}
                 title="Elazığ Nöbetçi Eczaneleri"
               >
                 Elazığ Nöbetçi Eczaneleri
@@ -107,7 +107,7 @@ export default function Footer() {
 
             <li>
               <Link
-                href={"/nobetci-eczaneler/mugla"}
+                href={"/nobetci-eczaneler/mugla-nobetci-eczaneleri"}
                 title="Muğla Nöbetçi Eczaneleri"
               >
                 Muğla Nöbetçi Eczaneleri
