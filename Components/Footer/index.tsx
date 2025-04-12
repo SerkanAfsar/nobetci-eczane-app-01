@@ -126,6 +126,7 @@ export default function Footer() {
               title="Serkan Afşar"
               className="underline"
               target="_blank"
+              rel="nofollow"
             >
               JesterColony
             </Link>

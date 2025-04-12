@@ -44,6 +44,7 @@ export default function HeaderBottom() {
           </ul>
           <Link
             href={"/nobetci-eczaneler"}
+            title="Tüm İller"
             className="bg-primary rounded-4xl px-6 py-3 font-bold"
           >
             Tüm İller
