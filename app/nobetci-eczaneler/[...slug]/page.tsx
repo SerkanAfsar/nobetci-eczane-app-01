@@ -49,10 +49,35 @@ export async function generateMetadata({
   return {
     title: value,
     description: `${value} | ${value} Adres ve Telefon Numaraları`,
+    robots: "index,follow",
+    publisher: "Nöbetçi Eczane",
+    authors: [
+      {
+        name: "Nöbetçi Eczane",
+        url: "https://www.nobetcieczanelistesi.org",
+      },
+    ],
+    themeColor: "#fff",
+
     openGraph: {
       title: value,
       description: `${value} | ${value} Adres ve Telefon Numaraları`,
       url,
+      locale: "tr_TR",
+      siteName: "Nöbetçi Eczane",
+      authors: ["Nöbetçi Eczane"],
+      emails: ["info@nobetcieczanelistesi.org"],
+    },
+
+    twitter: {
+      card: "summary",
+      description: `${value} | ${value} Adres ve Telefon Numaraları`,
+      title: value,
+      creator: "@nobetcieczane",
+    },
+
+    alternates: {
+      canonical: url,
     },
   };
 }
