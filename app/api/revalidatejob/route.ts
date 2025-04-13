@@ -15,24 +15,21 @@ export async function GET() {
 
   const data = cityList.entities as CityType[];
   for (let i = 0; i < data.length; i++) {
-    const city = data[i];
-    revalidatePath(`/nobetci-eczaneler/${city.seoUrl}`);
-    const result = await GetCityPharmacies({ id: city.ilid });
-    if (!result) {
-      break;
-    }
+    try {
+      const city = data[i];
+      revalidatePath(`/nobetci-eczaneler/${city.seoUrl}`);
+      const result = await GetCityPharmacies({ id: city.ilid });
 
-    const pharmacyList = result.entity?.pharmacies as PharmacyType[];
-    if (!pharmacyList?.length) {
-      break;
-    }
-    const districtList = Array.from(
-      new Set(pharmacyList.map((a) => a.ilceAdi)),
-    );
-    for (let k = 0; k < districtList.length; k++) {
-      const element = districtList[k];
-      revalidatePath(`/nobetci-eczaneler/${city.seoUrl}/${slugUrl(element)}`);
-    }
+      const pharmacyList = result.entity?.pharmacies as PharmacyType[];
+
+      const districtList = Array.from(
+        new Set(pharmacyList.map((a) => a.ilceAdi)),
+      );
+      for (let k = 0; k < districtList.length; k++) {
+        const element = districtList[k];
+        revalidatePath(`/nobetci-eczaneler/${city.seoUrl}/${slugUrl(element)}`);
+      }
+    } catch {}
   }
   return NextResponse.json({ message: "Güncellendi" }, { status: 200 });
 }
