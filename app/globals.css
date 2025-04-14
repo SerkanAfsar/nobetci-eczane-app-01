@@ -66,6 +66,9 @@ body {
   @variant xl {
     padding-inline: 4rem;
   }
+  @variant 2xl {
+    padding-inline: 8rem;
+  }
 }
 @utility flexCenter {
   @apply flex items-center justify-center;
