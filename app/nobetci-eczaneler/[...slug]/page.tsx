@@ -130,14 +130,10 @@ export async function generateStaticParams(): Promise<SlugType[]> {
   for (let i = 0; i < data.length; i++) {
     const city = data[i];
     const result = await GetCityPharmacies({ id: city.ilid });
-    // if (!result) {
-    //   break;
-    // }
+
     slugList.push({ slug: [city.seoUrl] });
     const pharmacyList = result.entity?.pharmacies as PharmacyType[];
-    // if (!pharmacyList?.length) {
-    //   break;
-    // }
+
     const districtList = Array.from(
       new Set(pharmacyList.map((a) => a.ilceAdi)),
     );

@@ -1,6 +1,6 @@
 import { GetCityListService, GetCityPharmacies } from "@/Services";
 import { CityType, PharmacyType } from "@/Types";
-import { slugUrl } from "@/utils";
+import { getDistrictList, slugUrl } from "@/utils";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
@@ -14,22 +14,22 @@ export async function GET() {
   }
 
   const data = cityList.entities as CityType[];
+
   for (let i = 0; i < data.length; i++) {
-    try {
-      const city = data[i];
-      revalidatePath(`/nobetci-eczaneler/${city.seoUrl}`);
-      const result = await GetCityPharmacies({ id: city.ilid });
+    const city = data[i];
+    revalidatePath(`/nobetci-eczaneler/${city.seoUrl}`);
+    const result = await GetCityPharmacies({ id: city.ilid });
 
-      const pharmacyList = result.entity?.pharmacies as PharmacyType[];
+    const districtList = getDistrictList(
+      result.entity?.pharmacies as PharmacyType[],
+    );
 
-      const districtList = Array.from(
-        new Set(pharmacyList.map((a) => a.ilceAdi)),
-      );
-      for (let k = 0; k < districtList.length; k++) {
-        const element = districtList[k];
-        revalidatePath(`/nobetci-eczaneler/${city.seoUrl}/${slugUrl(element)}`);
-      }
-    } catch {}
+    for (let k = 0; k < districtList.length; k++) {
+      const element = districtList[k];
+      revalidatePath(`/nobetci-eczaneler/${city.seoUrl}/${slugUrl(element)}`);
+    }
   }
   return NextResponse.json({ message: "Güncellendi" }, { status: 200 });
 }
+
+export const dynamic = "force-dynamic";
