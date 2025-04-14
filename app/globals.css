@@ -64,7 +64,7 @@ body {
     padding-inline: 2rem;
   }
   @variant xl {
-    padding-inline: 2rem;
+    padding-inline: 4rem;
   }
 }
 @utility flexCenter {
