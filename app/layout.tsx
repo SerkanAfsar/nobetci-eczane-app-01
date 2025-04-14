@@ -5,6 +5,7 @@ import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
 import { Analytics } from "@vercel/analytics/react";
 import NextTopLoader from "nextjs-toploader";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -24,6 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr">
+      <GoogleTagManager gtmId="G-6MLYNK12P4" />
       <body
         className={`${poppins.variable} font-poppins flex flex-col antialiased`}
       >
