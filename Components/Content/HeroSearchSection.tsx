@@ -60,7 +60,7 @@ export default function HeroSearchSection({
   };
 
   return (
-    <div className="flex max-w-2xl flex-col justify-between gap-3 rounded-md bg-white p-3 shadow md:flex-row">
+    <div className="flex max-w-3xl flex-col justify-between gap-3 rounded-md bg-white p-3 shadow md:flex-row">
       <CustomCombobox
         onChange={setSelectedCity}
         options={cityList}

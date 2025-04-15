@@ -17,7 +17,10 @@ export async function GET() {
 
   for (let i = 0; i < data.length; i++) {
     const city = data[i];
-    revalidatePath(`/nobetci-eczaneler/${city.seoUrl}`);
+
+    await new Promise(() => {
+      revalidatePath(`/nobetci-eczaneler/${city.seoUrl}`);
+    });
     const result = await GetCityPharmacies({ id: city.ilid });
 
     const districtList = getDistrictList(
@@ -25,12 +28,14 @@ export async function GET() {
     );
 
     for (let k = 0; k < districtList.length; k++) {
-      const element = districtList[k];
-      revalidatePath(`/nobetci-eczaneler/${city.seoUrl}/${slugUrl(element)}`);
+      const element = slugUrl(districtList[k].toLocaleLowerCase());
+      const url = `/nobetci-eczaneler/${city.seoUrl}/${element}`;
+      await new Promise(() => {
+        revalidatePath(url);
+      });
     }
   }
   return NextResponse.json({ message: "Güncellendi" }, { status: 200 });
 }
 
 export const dynamic = "force-dynamic";
-
