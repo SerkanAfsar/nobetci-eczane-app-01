@@ -33,6 +33,8 @@ export type PharmacyType = {
   latitude: string;
   longitude: string;
   guidKey: string;
+  cityName?: string;
+  setMap?: (lat: string, long: string) => void;
 };
 
 export type CityPharmacyType = {
