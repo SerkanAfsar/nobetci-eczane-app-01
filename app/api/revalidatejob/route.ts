@@ -18,8 +18,9 @@ export async function GET() {
   for (let i = 0; i < data.length; i++) {
     const city = data[i];
 
-    await new Promise(() => {
+    await new Promise((resolve) => {
       revalidatePath(`/nobetci-eczaneler/${city.seoUrl}`);
+      resolve("");
     });
     const result = await GetCityPharmacies({ id: city.ilid });
 
@@ -30,8 +31,9 @@ export async function GET() {
     for (let k = 0; k < districtList.length; k++) {
       const element = slugUrl(districtList[k].toLocaleLowerCase());
       const url = `/nobetci-eczaneler/${city.seoUrl}/${element}`;
-      await new Promise(() => {
+      await new Promise((resolve) => {
         revalidatePath(url);
+        resolve("");
       });
     }
   }
