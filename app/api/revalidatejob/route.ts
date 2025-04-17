@@ -1,7 +1,7 @@
+import { revalidateCustomPath } from "@/Actions";
 import { GetCityListService, GetCityPharmacies } from "@/Services";
 import { CityType, PharmacyType } from "@/Types";
 import { getDistrictList, slugUrl } from "@/utils";
-import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -18,10 +18,8 @@ export async function GET() {
   for (let i = 0; i < data.length; i++) {
     const city = data[i];
 
-    await new Promise((resolve) => {
-      revalidatePath(`/nobetci-eczaneler/${city.seoUrl}`);
-      resolve("");
-    });
+    await revalidateCustomPath(`/nobetci-eczaneler/${city.seoUrl}`);
+
     const result = await GetCityPharmacies({ id: city.ilid });
 
     const districtList = getDistrictList(
@@ -31,10 +29,8 @@ export async function GET() {
     for (let k = 0; k < districtList.length; k++) {
       const element = slugUrl(districtList[k].toLocaleLowerCase());
       const url = `/nobetci-eczaneler/${city.seoUrl}/${element}`;
-      await new Promise((resolve) => {
-        revalidatePath(url);
-        resolve("");
-      });
+
+      await revalidateCustomPath(url);
     }
   }
   return NextResponse.json({ message: "Güncellendi" }, { status: 200 });
