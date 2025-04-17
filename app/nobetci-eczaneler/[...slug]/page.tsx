@@ -109,7 +109,7 @@ export default async function Page({
   return (
     <>
       <h4 className="bg-primary mb-3 block w-full rounded-md p-3 text-center text-base font-bold text-white uppercase lg:text-left lg:text-lg">
-        {new Date().toLocaleDateString()} {"-"} {result.city.ilAdi}
+        {new Date().toLocaleDateString()} {"-"} {result.city.ilAdi} {Date.now()}
         {districtName && `-${districtName}`} Nöbetçi Eczaneleri
       </h4>
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -151,8 +151,8 @@ export async function generateStaticParams(): Promise<SlugType[]> {
       new Set(pharmacyList.map((a) => a.ilceAdi)),
     );
     for (let k = 0; k < districtList.length; k++) {
-      const element = districtList[k];
-      slugList.push({ slug: [city.ilAdi, slugUrl(element)!] });
+      const element = slugUrl(districtList[k].toLocaleLowerCase());
+      slugList.push({ slug: [city.ilAdi, element!] });
     }
   }
   return slugList;
@@ -160,4 +160,4 @@ export async function generateStaticParams(): Promise<SlugType[]> {
 
 export const dynamic = "force-static";
 
-export const revalidate = 10;
+export const revalidate = 60;
