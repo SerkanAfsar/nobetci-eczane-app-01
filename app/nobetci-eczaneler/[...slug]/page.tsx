@@ -109,8 +109,8 @@ export default async function Page({
   return (
     <>
       <h4 className="bg-primary mb-3 block w-full rounded-md p-3 text-center text-base font-bold text-white uppercase lg:text-left lg:text-lg">
-        {new Date().toLocaleDateString()} {"-"} {result.city.ilAdi} {Date.now()}
-        {districtName && `-${districtName}`} Nöbetçi Eczaneleri
+        {new Date().toLocaleDateString()} {"-"} {result.city.ilAdi}
+        {districtName && `-${districtName}`} Nöbetçi Eczaneleri -
       </h4>
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         <CustomSeoTags
@@ -143,7 +143,6 @@ export async function generateStaticParams(): Promise<SlugType[]> {
   for (let i = 0; i < data.length; i++) {
     const city = data[i];
     const result = await GetCityPharmacies({ id: city.ilid });
-
     slugList.push({ slug: [city.seoUrl] });
     const pharmacyList = result.entity?.pharmacies as PharmacyType[];
 
@@ -157,7 +156,3 @@ export async function generateStaticParams(): Promise<SlugType[]> {
   }
   return slugList;
 }
-
-export const dynamic = "force-static";
-
-export const revalidate = 60;
