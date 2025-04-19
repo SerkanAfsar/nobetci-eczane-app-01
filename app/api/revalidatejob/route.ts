@@ -1,17 +1,15 @@
-import { UpdateList } from "@/Actions";
 import { NextResponse } from "next/server";
+import puppeteer from "puppeteer-core";
 
 export async function GET() {
-  // const browser = await puppeteer.launch({ channel: "chrome" });
-  // const page = await browser.newPage();
+  const browser = await puppeteer.launch({ channel: "chrome" });
+  const page = await browser.newPage();
 
-  // await page.goto("http://localhost:3000/deneme");
+  await page.goto("https://www.nobetcieczanelistesi.org/deneme");
 
-  // await page.click("#myButton");
+  await page.click("#myButton");
 
-  // await browser.close();
-  // return NextResponse.json({ message: "success" }, { status: 200 });
-  await UpdateList();
+  await browser.close();
   return NextResponse.json({ message: "success" }, { status: 200 });
 }
 

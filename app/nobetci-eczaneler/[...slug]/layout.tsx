@@ -85,6 +85,4 @@ export default async function Layout({
     </section>
   );
 }
-export const dynamic = "force-static";
 
-export const revalidate = 60;

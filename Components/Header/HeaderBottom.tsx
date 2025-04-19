@@ -52,7 +52,7 @@ export default function HeaderBottom() {
           {/* <Link
             href={"/deneme"}
             title="Tüm İller"
-            className="bg-primary rounded-4xl px-6 py-3 font-bold"
+            className="bg-primary hidden rounded-4xl px-6 py-3 font-bold"
           >
             Deneme
           </Link> */}

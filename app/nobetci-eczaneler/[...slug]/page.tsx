@@ -110,7 +110,7 @@ export default async function Page({
     <>
       <h4 className="bg-primary mb-3 block w-full rounded-md p-3 text-center text-base font-bold text-white uppercase lg:text-left lg:text-lg">
         {new Date().toLocaleDateString()} {"-"} {result.city.ilAdi}
-        {districtName && `-${districtName}`} Nöbetçi Eczaneleri -
+        {districtName && `- ${districtName}`} Nöbetçi Eczaneleri
       </h4>
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         <CustomSeoTags
@@ -156,3 +156,7 @@ export async function generateStaticParams(): Promise<SlugType[]> {
   }
   return slugList;
 }
+
+export const dynamic = "force-static";
+
+export const revalidate = 60;
