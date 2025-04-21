@@ -3,6 +3,7 @@ import { PharmacyType } from "@/Types";
 import img from "../../public/images/nobetcilogo.svg";
 import CustomImage from "../Common/CustomImage";
 import { useState } from "react";
+import Modal from "./Modal";
 
 export default function PharmacyItem({ pharmacy }: { pharmacy: PharmacyType }) {
   const [modalOpened, setModalOpened] = useState<boolean>(false);
@@ -49,7 +50,15 @@ export default function PharmacyItem({ pharmacy }: { pharmacy: PharmacyType }) {
           Haritada Görüntüle
         </button>
       )}
-      {/* {modalOpened && <Modal />} */}
+      {modalOpened && (
+        <Modal
+          lat={pharmacy.latitude}
+          long={pharmacy.longitude}
+          pharmacyName={pharmacy.eczaneAdi}
+          setVisible={setModalOpened}
+          isVisible={modalOpened}
+        />
+      )}
     </div>
   );
 }

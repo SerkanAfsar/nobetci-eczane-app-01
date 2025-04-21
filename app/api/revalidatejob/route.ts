@@ -5,11 +5,11 @@ export async function GET() {
   const browser = await puppeteer.launch({ channel: "chrome" });
   const page = await browser.newPage();
 
-  await page.goto("https://www.nobetcieczanelistesi.org/deneme");
+  await page.goto(`${process.env.NEXT_PUBLIC_SITE_NAME}/deneme`);
 
   await page.click("#myButton");
 
-  await browser.close();
+  // await browser.close();
   return NextResponse.json({ message: "success" }, { status: 200 });
 }
 

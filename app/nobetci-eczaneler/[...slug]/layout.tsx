@@ -73,7 +73,7 @@ export default async function Layout({
                     className="bg-primary block w-full rounded-md p-3 text-white"
                     href={`/nobetci-eczaneler/${result.city.seoUrl}/${slugUrl(item)}`}
                   >
-                    {item} Nöbetçi Eczaneleri
+                    {item.replace("&nbsp;", " ")} Nöbetçi Eczaneleri
                   </Link>
                 </li>
               ))}
@@ -85,4 +85,3 @@ export default async function Layout({
     </section>
   );
 }
-
