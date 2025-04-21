@@ -74,10 +74,10 @@ export const getDistrictList = (pharmacyList: PharmacyType[]): string[] => {
 export const findDistrictName = (districtList: string[], slugText: string) => {
   return districtList.find((a) => slugUrl(a.toLocaleLowerCase()) == slugText);
 };
-export const formatTime = (date: Date) => {
-  const pad = (num: number) => String(num).padStart(2, "0");
-  const hours = pad(date.getHours());
-  const minutes = pad(date.getMinutes());
-  const seconds = pad(date.getSeconds());
-  return `${date.toLocaleString()}`;
-};
+// export const formatTime = (date: Date) => {
+//   const pad = (num: number) => String(num).padStart(2, "0");
+//   const hours = pad(date.getHours());
+//   const minutes = pad(date.getMinutes());
+//   const seconds = pad(date.getSeconds());
+//   return `${date.toLocaleString()}`;
+// };

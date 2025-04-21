@@ -5,7 +5,6 @@ import { CityType, PharmacyType } from "@/Types";
 import {
   FindCityWithPharmacies,
   findDistrictName,
-  formatTime,
   getDistrictList,
   slugUrl,
 } from "@/utils";
