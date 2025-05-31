@@ -31,14 +31,17 @@ export const fetchList = async () => {
   const cityList = cityListResult.entities as CityType[];
 
   for (const city of cityList) {
-    // revalidatePath(`/nobetci-eczaneler/${city.seoUrl}`);
-
-    const cityResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_SITE_NAME}/nobetci-eczaneler/${city.seoUrl}`,
-    );
-    if (cityResponse.ok) {
-      console.log("City Responsed", city.ilAdi);
+    try {
+      const cityResponse = await fetch(
+        `https://www.nobetcieczanelistesi.org/nobetci-eczaneler/${city.seoUrl}`,
+      );
+      if (cityResponse.ok) {
+        console.log("City Responsed", city.ilAdi);
+      }
+    } catch (error) {
+      console.log(error);
     }
+
     const result = await GetCityPharmacies({ id: city.ilid });
     const districtList = getDistrictList(
       result.entity?.pharmacies as PharmacyType[],
@@ -48,13 +51,16 @@ export const fetchList = async () => {
       const element = slugUrl(district.toLocaleLowerCase());
       const url = `/nobetci-eczaneler/${city.seoUrl}/${element}`;
 
-      // revalidatePath(url);
-      const districtResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_SITE_NAME}${url}`,
-      );
+      try {
+        const districtResponse = await fetch(
+          `https://www.nobetcieczanelistesi.org${url}`,
+        );
 
-      if (districtResponse.ok) {
-        console.log("District Responsed", element);
+        if (districtResponse.ok) {
+          console.log("District Responsed", element);
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
   }
