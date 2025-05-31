@@ -1,76 +1,56 @@
 import CustomSeoTags from "@/Components/Common/CustomSeoTags";
 import PharmacyItem from "@/Components/Content/PharmacyItem";
 import { GetCityDetailItem, GetCityListWithDistricts } from "@/Services";
-import { slugUrl } from "@/utils";
+import { slugifyPharmacyUrl, slugUrl } from "@/utils";
+import { Metadata } from "next";
 
-// export async function generateMetadata({
-//   params,
-// }: {
-//   params: Promise<{ slug: string[] }>;
-// }): Promise<Metadata> {
-//   const { slug } = await params;
-//   const result = await FindCityWithPharmacies(slug[0]);
-//   if (!result) {
-//     return {
-//       title: "Nöbetçi Eczane",
-//       description: `Nöbetçi Eczane Adres ve Telefon Numaraları`,
-//       openGraph: {
-//         title: "Nöbetçi Eczane",
-//         description: `Nöbetçi Eczane Adres ve Telefon Numaraları`,
-//       },
-//     };
-//   }
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string[] }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const { cityName, districtName } = await getDistrictAndCityName(slug);
+  const value = districtName
+    ? `${cityName} ${districtName} Nöbetçi Eczaneleri`
+    : `${cityName} Nöbetçi Eczaneleri`;
 
-//   let districtName: string | undefined = "";
-//   if (slug.length == 2) {
-//     const districtList = getDistrictList(result.pharmacies);
-//     districtName = findDistrictName(districtList, slug[1]);
-//   }
+  const url = `${process.env.NEXT_PUBLIC_SITE_NAME}${slugifyPharmacyUrl({ cityName, districtName })}`;
 
-//   const value = districtName
-//     ? `${result.city.ilAdi} ${districtName} Nöbetçi Eczaneleri`
-//     : `${result.city.ilAdi} Nöbetçi Eczaneleri`;
+  return {
+    title: value,
+    description: `${value} | ${value} Adres ve Telefon Numaraları`,
+    robots: "index,follow",
+    publisher: "Nöbetçi Eczane",
+    authors: [
+      {
+        name: "Nöbetçi Eczane",
+        url: process.env.NEXT_PUBLIC_SITE_NAME,
+      },
+    ],
 
-//   let url = `https://www.nobetcieczanelistesi.org/${result.city.seoUrl}`;
+    openGraph: {
+      title: value,
+      description: `${value} | ${value} Adres ve Telefon Numaraları`,
+      url,
+      locale: "tr_TR",
+      siteName: "Nöbetçi Eczane",
+      authors: ["Nöbetçi Eczane"],
+      emails: ["info@nobetcieczanelistesi.org"],
+    },
 
-//   if (districtName) {
-//     url += "/" + slugUrl(districtName);
-//   }
+    twitter: {
+      card: "summary",
+      description: `${value} | ${value} Adres ve Telefon Numaraları`,
+      title: value,
+      creator: "@nobetcieczane",
+    },
 
-//   return {
-//     title: value,
-//     description: `${value} | ${value} Adres ve Telefon Numaraları`,
-//     robots: "index,follow",
-//     publisher: "Nöbetçi Eczane",
-//     authors: [
-//       {
-//         name: "Nöbetçi Eczane",
-//         url: "https://www.nobetcieczanelistesi.org",
-//       },
-//     ],
-
-//     openGraph: {
-//       title: value,
-//       description: `${value} | ${value} Adres ve Telefon Numaraları`,
-//       url,
-//       locale: "tr_TR",
-//       siteName: "Nöbetçi Eczane",
-//       authors: ["Nöbetçi Eczane"],
-//       emails: ["info@nobetcieczanelistesi.org"],
-//     },
-
-//     twitter: {
-//       card: "summary",
-//       description: `${value} | ${value} Adres ve Telefon Numaraları`,
-//       title: value,
-//       creator: "@nobetcieczane",
-//     },
-
-//     alternates: {
-//       canonical: url,
-//     },
-//   };
-// }
+    alternates: {
+      canonical: url,
+    },
+  };
+}
 
 const getDistrictAndCityName = async (slug: string[]) => {
   const cityDetail = await GetCityDetailItem(slug[0]);
