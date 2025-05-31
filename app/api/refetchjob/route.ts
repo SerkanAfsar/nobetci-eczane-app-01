@@ -1,8 +1,8 @@
-import { UpdateList } from "@/Actions";
+import { fetchList } from "@/Actions";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  await UpdateList();
+  await fetchList();
 
   return NextResponse.json({ message: "success" }, { status: 200 });
 }
