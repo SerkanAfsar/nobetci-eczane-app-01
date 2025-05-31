@@ -1,12 +1,12 @@
-import { GetCityListService } from "@/Services";
 import { CityType } from "@/Types";
 import CityListWithSearch from "./CityListWithSearch";
 import CustomAlert from "../Common/CustomAlert";
+import { GetCityListServiceRedis } from "@/Services";
 
 export default async function CityListWrapper() {
-  const result = await GetCityListService();
-  if (result.hasError || !result.isSuccess) {
-    return <CustomAlert alertMessage={result.errorList.join(",")} />;
+  const result = await GetCityListServiceRedis();
+  if (!result || result.hasError || !result.isSuccess) {
+    return <CustomAlert alertMessage={result?.errorList.join(",") || ""} />;
   }
   const data = result.entities as CityType[];
   return (

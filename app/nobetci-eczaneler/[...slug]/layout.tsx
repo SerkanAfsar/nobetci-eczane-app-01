@@ -1,4 +1,5 @@
-import { cn, FindCityWithPharmacies, getDistrictList, slugUrl } from "@/utils";
+import { GetCityDetailItem } from "@/Services";
+import { cn, slugifyPharmacyUrl, slugUrl } from "@/utils";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -10,16 +11,33 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   const { slug } = await params;
+  const selectedCity = await GetCityDetailItem(slug[0]);
 
-  const result = await FindCityWithPharmacies(slug[0]);
-  if (!result) {
+  if (!selectedCity) {
     return notFound();
   }
-  const distictList = getDistrictList(result.pharmacies);
 
-  const selectedDistrict = distictList.find(
-    (a) => slugUrl(a.toLocaleLowerCase()) == slug[1],
+  const districtUrl = slug[1];
+
+  const selectedDistrict = selectedCity.districtList?.find(
+    (a) => slugUrl(a!) == districtUrl,
   );
+
+  const districtExists =
+    districtUrl && selectedCity.districtList?.length && selectedDistrict;
+
+  if (districtUrl && !districtExists) {
+    return notFound();
+  }
+  if (!selectedCity.pharmacies?.length) {
+    return (
+      <section className="bg-primary flex h-full flex-auto items-center justify-center py-4 text-center text-white">
+        <h1 className="text-2xl font-semibold text-white uppercase">
+          {`"${selectedCity.cityName}"`} İline Ait Eczaneler Hazırlanmaktadır..
+        </h1>
+      </section>
+    );
+  }
 
   return (
     <section className="container mx-auto">
@@ -43,17 +61,20 @@ export default async function Layout({
               )}
             >
               <Link
-                href={`/nobetci-eczaneler/${result.city.seoUrl}`}
-                title={`${result.city.ilAdi} Nöbetçi Eczaneleri`}
+                href={slugifyPharmacyUrl({ cityName: selectedCity.cityName })}
+                title={`${selectedCity.cityName} Nöbetçi Eczaneleri`}
               >
-                {result.city.ilAdi}
+                {selectedCity.cityName}
               </Link>
             </li>
             {selectedDistrict && (
               <li>
                 <Link
-                  href={`/nobetci-eczaneler/${result.city.seoUrl}/${slugUrl(selectedDistrict)}`}
-                  title={`${result.city.ilAdi} ${selectedDistrict} Nöbetçi Eczaneleri`}
+                  href={slugifyPharmacyUrl({
+                    cityName: selectedCity.cityName,
+                    districtName: selectedDistrict,
+                  })}
+                  title={`${selectedCity} ${selectedDistrict} Nöbetçi Eczaneleri`}
                 >
                   {selectedDistrict}
                 </Link>
@@ -66,12 +87,15 @@ export default async function Layout({
         <aside className="flex-auto md:flex-1/4">
           <nav className="block w-full">
             <ul className="flex w-full flex-col gap-3">
-              {distictList.map((item, key) => (
+              {selectedCity.districtList?.map((item, key) => (
                 <li key={key}>
                   <Link
-                    title={`${result.city.ilAdi} ${item} Nöbetçi Eczaneleri`}
+                    title={`${selectedCity} ${item} Nöbetçi Eczaneleri`}
                     className="bg-primary block w-full rounded-md p-3 text-white"
-                    href={`/nobetci-eczaneler/${result.city.seoUrl}/${slugUrl(item)}`}
+                    href={slugifyPharmacyUrl({
+                      cityName: selectedCity.cityName,
+                      districtName: item,
+                    })}
                   >
                     {item.replace("&nbsp;", " ")} Nöbetçi Eczaneleri
                   </Link>

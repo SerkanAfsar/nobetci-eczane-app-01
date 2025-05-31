@@ -1,5 +1,5 @@
 import { CityType } from "@/Types";
-import { cn } from "@/utils";
+import { cn, slugifyPharmacyUrl } from "@/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useLayoutEffect } from "react";
@@ -58,10 +58,10 @@ export default function HeaderAside({
             <li key={index}>
               <Link
                 className="bg-primary block w-full rounded-md p-3 text-white shadow"
-                href={`/nobetci-eczaneler/${city.seoUrl}`}
-                title={`${city.ilAdi} Nöbetçi Eczaneleri`}
+                href={slugifyPharmacyUrl({ cityName: city.cityName })}
+                title={`${city.cityName} Nöbetçi Eczaneleri`}
               >
-                {city.ilAdi} Nöbetçi Eczaneleri
+                {city.cityName} Nöbetçi Eczaneleri
               </Link>
             </li>
           ))}

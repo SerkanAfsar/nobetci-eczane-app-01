@@ -1,13 +1,7 @@
-import { GetCityListService, GetCityPharmacies } from "@/Services";
-import {
-  CityPharmacyType,
-  CityType,
-  NavbarLinkType,
-  PharmacyType,
-} from "@/Types";
+import { CustomOptionsType, NavbarLinkType, Pharmacies } from "@/Types";
 import clsx from "clsx";
 import { ClassValue } from "clsx";
-import { notFound } from "next/navigation";
+
 import slugify from "slugify";
 import { twMerge } from "tailwind-merge";
 
@@ -32,28 +26,28 @@ export const NavbarLinks: NavbarLinkType[] = [
   },
 ];
 
-export const FindCityWithPharmacies = async (
-  slug: string,
-): Promise<CityPharmacyType | null> => {
-  const cityResult = await GetCityListService();
-  if (!cityResult.isSuccess) {
-    throw new Error(cityResult.errorList.join(","));
-  }
-  const city = (cityResult.entities as CityType[]).find(
-    (a) => a.seoUrl == slug,
-  );
-  if (!city) {
-    return notFound();
-  }
-  const cityPharmacy = await GetCityPharmacies({ id: city.ilid });
-  if (!cityPharmacy.isSuccess) {
-    throw new Error(cityPharmacy.errorList.join(","));
-  }
+// export const FindCityWithPharmacies = async (
+//   slug: string,
+// ): Promise<CityPharmacyType | null> => {
+//   const cityResult = await GetCityListService();
+//   if (!cityResult.isSuccess) {
+//     throw new Error(cityResult.errorList.join(","));
+//   }
+//   const city = (cityResult.entities as CityType[]).find(
+//     (a) => a.seoUrl == slug,
+//   );
+//   if (!city) {
+//     return notFound();
+//   }
+//   const cityPharmacy = await GetCityPharmacies({ id: city.ilid });
+//   if (!cityPharmacy.isSuccess) {
+//     throw new Error(cityPharmacy.errorList.join(","));
+//   }
 
-  return cityPharmacy.entity ?? null;
-};
+//   return cityPharmacy.entity ?? null;
+// };
 
-export const slugUrl = (value: string): string | null => {
+export const slugUrl = (value: string): string => {
   if (value) {
     return slugify(value, {
       replacement: "-", // replace spaces with replacement character, defaults to `-`
@@ -64,11 +58,7 @@ export const slugUrl = (value: string): string | null => {
       trim: true, // trim leading and trailing replacement chars, defaults to `true`
     });
   }
-  return null;
-};
-
-export const getDistrictList = (pharmacyList: PharmacyType[]): string[] => {
-  return Array.from(new Set(pharmacyList.map((item) => item.ilceAdi)));
+  return "not defined";
 };
 
 export const findDistrictName = (districtList: string[], slugText: string) => {
@@ -81,3 +71,41 @@ export const findDistrictName = (districtList: string[], slugText: string) => {
 //   const seconds = pad(date.getSeconds());
 //   return `${date.toLocaleString()}`;
 // };
+
+export const slugifyPharmacyUrl = ({
+  cityName,
+  districtName,
+}: {
+  cityName: string;
+  districtName?: string;
+}) => {
+  let url = `/nobetci-eczaneler/` + slugUrl(`${cityName} nöbetçi eczaneleri`);
+  if (districtName) {
+    url += `/${slugUrl(districtName)}`;
+  }
+  return url;
+};
+
+export function GetCustomOptions<
+  T extends object,
+  FieldOne extends keyof T,
+  FieldTwo extends keyof T,
+>(arr: T[], fieldOne: FieldOne, fieldTwo: FieldTwo): CustomOptionsType[] {
+  return arr.map((item) => ({
+    id: item[fieldOne] as string | number,
+    value: item[fieldTwo] as string,
+    label: item[fieldTwo] as string,
+  }));
+}
+export function GetDistrictListCustomOptions(
+  pharmacyArr: Pharmacies[],
+): CustomOptionsType[] {
+  const districtList = new Set(pharmacyArr.map((item) => item.districtName));
+  const newArr: CustomOptionsType[] = [...districtList].map((item) => ({
+    id: item!,
+    value: item!,
+    label: item!,
+  }));
+
+  return GetCustomOptions(newArr, "id", "label");
+}

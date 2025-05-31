@@ -1,6 +1,7 @@
 "use server";
 
-import { CityPharmacyType, CityType, ResponseResult } from "@/Types";
+import { CityType, ResponseResult } from "@/Types";
+import client from "@/utils/redis";
 
 export type BaseServiceType = {
   method: "GET" | "POST" | "PUT" | "DELETE";
@@ -9,58 +10,54 @@ export type BaseServiceType = {
   isDynamic?: boolean;
 };
 
-export async function BaseService({
-  method = "GET",
-  url,
-  body,
-  isDynamic = false,
-}: BaseServiceType) {
+export const GetCityDetailItem = async (
+  citySlugUrl: string,
+): Promise<CityType | undefined> => {
+  const result = await client.get(`city:${citySlugUrl}`);
+  return result ? (JSON.parse(result) as CityType) : undefined;
+};
+
+export const GetCityListServiceRedis = async (): Promise<
+  ResponseResult<CityType> | undefined
+> => {
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/${url}`,
-      {
-        method,
-        body: body ? JSON.stringify(body) : null,
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-        // cache: isDynamic ? "no-store" : "default",
-      },
-    );
-    const result = (await response.json()) as ResponseResult<any>;
-    return result;
-  } catch (error: unknown) {
-    const result: ResponseResult<any> = {
-      entities: [],
-      hasError: true,
-      isSuccess: false,
-      statusCode: 400,
-      errorList: [],
-      entity: null,
-    };
-    if (error instanceof Error) {
-      result.errorList = [error.message];
-    } else if (typeof error == "string") {
-      result.errorList = [error];
-    } else {
-      result.errorList = ["Something went wrong"];
+    const cityList = await client.get("cityList");
+    if (!cityList) {
+      throw new Error("City List Not Found");
     }
-    return result;
+    const result = JSON.parse(cityList!) as string[];
+    return {
+      isSuccess: true,
+      entities: result.map((item) => ({
+        cityName: item,
+      })),
+      entity: null,
+      statusCode: 200,
+      hasError: false,
+      errorList: [],
+    };
+  } catch (error: unknown) {
+    console.log(error);
   }
-}
+};
 
-export async function GetCityListService() {
-  return (await BaseService({
-    method: "GET",
-    url: "Cities",
-    isDynamic: false,
-  })) as ResponseResult<CityType>;
-}
+export const GetCityListWithDistricts = async () => {
+  const cityKeys = [];
+  let cursor = "0";
 
-export async function GetCityPharmacies({ id }: { id: number }) {
-  return (await BaseService({
-    method: "GET",
-    url: `Pharmacies/${id}`,
-    isDynamic: true,
-  })) as ResponseResult<CityPharmacyType>;
-}
+  do {
+    const result = await client.scan(cursor, {
+      MATCH: "city:*",
+    });
+    cursor = result.cursor;
+    cityKeys.push(...result.keys);
+  } while (cursor !== "0");
+
+  const values = await client.mGet(cityKeys);
+
+  const keyValuePairs: CityType[] = cityKeys.map((key, index) => {
+    return JSON.parse(values[index]!) as CityType;
+  });
+
+  return keyValuePairs;
+};

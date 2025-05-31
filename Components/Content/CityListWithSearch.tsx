@@ -1,5 +1,6 @@
 "use client";
 import { CityType } from "@/Types";
+import { slugifyPharmacyUrl } from "@/utils";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -12,7 +13,8 @@ export default function CityListWithSearch({ cities }: { cities: CityType[] }) {
       setCityList(
         cities.filter(
           (a) =>
-            a.ilAdi.toLocaleLowerCase().indexOf(value.toLocaleLowerCase()) > -1,
+            a.cityName.toLocaleLowerCase().indexOf(value.toLocaleLowerCase()) >
+            -1,
         ),
       );
     } else {
@@ -37,10 +39,10 @@ export default function CityListWithSearch({ cities }: { cities: CityType[] }) {
             <Link
               className="bg-primary hover:text-shadow flexCenter h-full min-h-24 w-full gap-6 rounded-md p-3 text-center font-bold text-white uppercase shadow transition-all duration-300 hover:scale-105 hover:font-extrabold hover:shadow-xl"
               key={index}
-              href={`/nobetci-eczaneler/${item.seoUrl}`}
-              title={`${item.ilAdi} Nöbetçi Eczaneleri`}
+              href={slugifyPharmacyUrl({ cityName: item.cityName })}
+              title={`${item.cityName} Nöbetçi Eczaneleri`}
             >
-              {`${item.ilAdi} Nöbetçi Eczaneleri`}
+              {`${item.cityName} Nöbetçi Eczaneleri`}
             </Link>
           ))
         ) : (
