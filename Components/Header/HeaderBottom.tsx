@@ -1,8 +1,9 @@
+import dynamicImport from "next/dynamic";
 import Link from "next/link";
 import home from "../../public/images/home.png";
 import pharmacy from "../../public/images/Pharmacy.png";
-import CustomImage from "../Common/CustomImage";
 import { NavbarLinks } from "@/utils";
+const CustomImage = dynamicImport(() => import("../Common/CustomImage"));
 
 export default function HeaderBottom() {
   const itemList: { title: string; href: string; icon: any }[] = [

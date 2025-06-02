@@ -1,13 +1,14 @@
 "use client";
 import { cn, NavbarLinks } from "@/utils";
+import dynamic from "next/dynamic";
 import logo from "../../public/images/nobetcilogo.svg";
-import CustomImage from "../Common/CustomImage";
-import HeaderTopLink from "./HeaderTopLink";
 import { CityType } from "@/Types";
 import { useEffect, useRef, useState } from "react";
-import HeaderAside from "./HeaderAside";
 import menuIcon from "../../public/images/hamburger.png";
 import Link from "next/link";
+const CustomImage = dynamic(() => import("../Common/CustomImage"));
+const HeaderTopLink = dynamic(() => import("./HeaderTopLink"));
+const HeaderAside = dynamic(() => import("./HeaderAside"));
 
 export default function HeaderTop({ cityList }: { cityList: CityType[] }) {
   const [isOpened, setIsOpened] = useState<boolean>(false);

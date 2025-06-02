@@ -1,8 +1,7 @@
 "use client";
-
+import dynamic from "next/dynamic";
 import img from "../../public/images/nobetcilogo.svg";
-import CustomImage from "../Common/CustomImage";
-
+const CustomImage = dynamic(() => import("../Common/CustomImage"));
 import { Pharmacies } from "@/Types";
 
 export default function PharmacyItem({ pharmacy }: { pharmacy: Pharmacies }) {

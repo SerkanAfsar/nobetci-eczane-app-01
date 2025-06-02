@@ -1,8 +1,17 @@
-import CustomSeoTags from "@/Components/Common/CustomSeoTags";
-import PharmacyItem from "@/Components/Content/PharmacyItem";
+import dynamicImport from "next/dynamic";
 import { GetCityDetailItem, GetCityListWithDistricts } from "@/Services";
 import { slugifyPharmacyUrl, slugUrl } from "@/utils";
 import { Metadata } from "next";
+
+const CustomSeoTags = dynamicImport(
+  () => import("../../../Components/Common/CustomSeoTags"),
+);
+const CityDetailInfo = dynamicImport(
+  () => import("../../../Components/Content/CustomDetailInfo"),
+);
+const PharmacyItem = dynamicImport(
+  () => import("../../../Components/Content/PharmacyItem"),
+);
 
 export async function generateMetadata({
   params,
@@ -83,10 +92,11 @@ export default async function Page({
 
   return (
     <>
-      <h4 className="bg-primary mb-3 block w-full rounded-md p-3 text-center text-base font-bold text-white uppercase lg:text-left lg:text-lg">
+      {/* <h4 className="bg-primary mb-3 block w-full rounded-md p-3 text-center text-base font-bold text-white uppercase lg:text-left lg:text-lg">
         {new Date().toLocaleString()} {"-"} {cityName}
         {districtName && `- ${districtName}`} Nöbetçi Eczaneleri{" "}
-      </h4>
+      </h4> */}
+      <CityDetailInfo cityName={cityName} districtName={districtName} />
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         <CustomSeoTags cityName={cityName} districtName={districtName} />
 

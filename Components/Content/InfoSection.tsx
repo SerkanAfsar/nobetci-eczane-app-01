@@ -1,5 +1,6 @@
+import dynamic from "next/dynamic";
 import img from "../../public/images/nobetcilogo.svg";
-import CustomImage from "../Common/CustomImage";
+const CustomImage = dynamic(() => import("../Common/CustomImage"));
 
 export type InfoItemType = {
   title: string;

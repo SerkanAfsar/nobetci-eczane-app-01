@@ -1,5 +1,12 @@
-import CustomSeoTags from "@/Components/Common/CustomSeoTags";
-import CityListWrapper from "@/Components/Content/CityListWrapper";
+import dynamic from "next/dynamic";
+
+const CustomSeoTags = dynamic(
+  () => import("../../Components/Common/CustomSeoTags"),
+);
+const CityListWrapper = dynamic(
+  () => import("../../Components/Content/CityListWrapper"),
+);
+
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

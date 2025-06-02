@@ -1,7 +1,8 @@
 import { CityType } from "@/Types";
-import CityListWithSearch from "./CityListWithSearch";
-import CustomAlert from "../Common/CustomAlert";
+import dynamic from "next/dynamic";
 import { GetCityListServiceRedis } from "@/Services";
+const CityListWithSearch = dynamic(() => import("./CityListWithSearch"));
+const CustomAlert = dynamic(() => import("../Common/CustomAlert"));
 
 export default async function CityListWrapper() {
   const result = await GetCityListServiceRedis();

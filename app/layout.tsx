@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import Header from "@/Components/Header";
-import Footer from "@/Components/Footer";
+const Header = dynamic(() => import("../Components/Header"));
+const Footer = dynamic(() => import("../Components/Footer"));
 import { Analytics } from "@vercel/analytics/react";
 import NextTopLoader from "nextjs-toploader";
 

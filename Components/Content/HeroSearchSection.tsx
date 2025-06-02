@@ -1,19 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-
+import dynamic from "next/dynamic";
 import { useRouter } from "nextjs-toploader/app";
-import CustomSelect from "../UI/CustomSelect";
 import { CityType, CustomOptionsType } from "@/Types";
 import { GetCustomOptions, slugifyPharmacyUrl } from "@/utils";
 
-// const customClassNames = {
-//   control: () => "control",
-//   menu: () => "menu",
-//   option: ({ isFocused, isSelected }: any) =>
-//     `option ${isSelected ? "isSelected" : isFocused ? "isSelected" : "custom"}`,
-//   singleValue: () => "singleValue",
-//   input: () => "input",
-// };
+const CustomSelect = dynamic(() => import("../UI/CustomSelect"));
 
 const customClassNames2 = {
   control: (base: any, state: any) => ({

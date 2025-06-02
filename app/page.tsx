@@ -1,7 +1,13 @@
-import CustomSeoTags from "@/Components/Common/CustomSeoTags";
-import CityListWrapper from "@/Components/Content/CityListWrapper";
-import HeroSection from "@/Components/Content/HeroSection";
-import InfoSection from "@/Components/Content/InfoSection";
+import dynamic from "next/dynamic";
+const CustomSeoTags = dynamic(
+  () => import("../Components/Common/CustomSeoTags"),
+);
+const CityListWrapper = dynamic(
+  () => import("../Components/Content/CityListWrapper"),
+);
+const HeroSection = dynamic(() => import("../Components/Content/HeroSection"));
+const InfoSection = dynamic(() => import("../Components/Content/InfoSection"));
+
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

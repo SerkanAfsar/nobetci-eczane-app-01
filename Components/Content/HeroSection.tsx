@@ -1,7 +1,7 @@
 import { CityType } from "@/Types";
-
-import HeroSearchSection from "./HeroSearchSection";
+import dynamic from "next/dynamic";
 import { GetCityListServiceRedis } from "@/Services";
+const HeroSearchSection = dynamic(() => import("./HeroSearchSection"));
 
 export default async function HeroSection() {
   const cityResult = await GetCityListServiceRedis();

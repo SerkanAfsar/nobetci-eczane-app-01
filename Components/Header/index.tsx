@@ -1,7 +1,8 @@
+import dynamic from "next/dynamic";
 import { GetCityListServiceRedis } from "@/Services";
-import HeaderBottom from "./HeaderBottom";
-import HeaderTop from "./HeaderTop";
 import { CityType } from "@/Types";
+const HeaderBottom = dynamic(() => import("./HeaderBottom"));
+const HeaderTop = dynamic(() => import("./HeaderTop"));
 
 export default async function Header() {
   const cityResult = await GetCityListServiceRedis();
